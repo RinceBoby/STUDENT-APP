@@ -2,35 +2,36 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:hive/hive.dart';
 import 'package:students_app/core/constants.dart';
-import 'package:students_app/view/widgets/cutsom_buttons.dart';
+import 'package:students_app/model/student_model.dart';
 
-class HomeScreen extends StatelessWidget {
+import 'widgets/appbar_widget.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  //<<<<<Hive_box>>>>>//
+  Box studentBox = Hive.box<Student>(boxName);
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFDFE9FF),
+      backgroundColor: const Color(0xFFDFE9FF),
       body: Column(
         children: [
-          kHeight50,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomButton(
-                  child: Icon(
-                    Icons.add_outlined,
-                    color: Colors.black
-                    //Color(0xFF8E98AE),
-
-                  ),
-                ),
-              ],
-            ),
-          )
+          //
+          //<<<<<AppBar>>>>>//
+          kHeight30,
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: AppBarWidget(),
+          ),
+          Container(),
         ],
       ),
     );
