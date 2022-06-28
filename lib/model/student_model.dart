@@ -17,12 +17,9 @@ class Student {
   final int age;
 
   @HiveField(4)
-  final String gender;
-
-  @HiveField(5)
   final int mobile;
 
-  @HiveField(6)
+  @HiveField(5)
   final String email;
 
   Student({
@@ -30,7 +27,6 @@ class Student {
     required this.lastName,
     required this.branch,
     required this.age,
-    required this.gender,
     required this.mobile,
     required this.email,
   });
