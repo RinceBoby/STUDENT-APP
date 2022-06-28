@@ -1,12 +1,13 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
+import 'package:students_app/core/colors.dart';
 import 'package:students_app/core/constants.dart';
 import 'package:students_app/model/student_model.dart';
 
 import 'widgets/appbar_widget.dart';
+import 'widgets/student_list_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,17 +22,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDFE9FF),
+      backgroundColor: kBgColor,
       body: Column(
-        children: [
-          //
+        children:const [
+          kHeight40,
+
           //<<<<<AppBar>>>>>//
-          kHeight30,
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+           Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: AppBarWidget(),
           ),
-          Container(),
+          //kHeight05,
+
+          //<<<<<Student_List>>>>>//
+          StudentListWidget(),
+          kHeight20,
         ],
       ),
     );

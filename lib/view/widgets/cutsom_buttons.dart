@@ -1,11 +1,14 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:students_app/core/colors.dart';
 
 class CustomButton extends StatelessWidget {
   CustomButton({
     Key? key,
-    required this.child,
+    required this.icon,
+    required this.onTap,
   }) : super(key: key);
-  final Widget child;
+  final IconData icon;
+  VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class CustomButton extends StatelessWidget {
         color: Color(0xFFDCE5F6),
         depth: 10,
         intensity: 0.8,
-        shape: NeumorphicShape.flat,
+        shape: NeumorphicShape.concave,
         boxShape: NeumorphicBoxShape.circle(),
       ),
       child: NeumorphicButton(
@@ -29,7 +32,13 @@ class CustomButton extends StatelessWidget {
           shape: NeumorphicShape.convex,
           boxShape: NeumorphicBoxShape.circle(),
         ),
-        child: child,
+        child: InkWell(
+          onTap: onTap,
+          child: Icon(
+            icon,
+            color: kGrey,
+          ),
+        ),
       ),
     );
   }

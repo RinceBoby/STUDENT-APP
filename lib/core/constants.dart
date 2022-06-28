@@ -7,6 +7,7 @@ const kWidth15 = SizedBox(width: 15);
 const kWidth20 = SizedBox(width: 20);
 const kWidth25 = SizedBox(width: 25);
 const kWidth30 = SizedBox(width: 30);
+const kWidth50 = SizedBox(width: 50);
 
 //<<<<<Height>>>>>//
 const kHeight05 = SizedBox(height: 05);
@@ -22,3 +23,4 @@ const kHeight50 = SizedBox(height: 50);
 final BorderRadius kRadius10 = BorderRadius.circular(10);
 final BorderRadius kRadius20 = BorderRadius.circular(20);
 final BorderRadius kRadius30 = BorderRadius.circular(30);
+final BorderRadius kRadius40 = BorderRadius.circular(40);
