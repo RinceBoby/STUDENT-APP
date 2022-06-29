@@ -5,10 +5,7 @@ part 'student_model.g.dart';
 @HiveType(typeId: 9)
 class Student {
   @HiveField(0)
-  final String firstName;
-
-  @HiveField(1)
-  final String lastName;
+  final String name;
 
   @HiveField(2)
   final String branch;
@@ -23,8 +20,7 @@ class Student {
   final String email;
 
   Student({
-    required this.firstName,
-    required this.lastName,
+    required this.name,
     required this.branch,
     required this.age,
     required this.mobile,

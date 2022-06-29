@@ -50,7 +50,7 @@ class EntryForm extends StatelessWidget {
                       ),
 
                       //<<<<<Entry_From>>>>>//
-                      child: const AddStudentFormWidget(),
+                      child: AddStudentFormWidget(),
                     ),
                   ),
                 ),

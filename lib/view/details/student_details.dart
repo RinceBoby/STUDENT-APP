@@ -8,7 +8,9 @@ import '../form/widgets/text_button_widget.dart';
 import 'widget/details_text_widget.dart';
 
 class StudentDetails extends StatelessWidget {
-  const StudentDetails({Key? key}) : super(key: key);
+   StudentDetails({Key? key,required this.student_details}) : super(key: key);
+
+   Map student_details = {};
 
   @override
   Widget build(BuildContext context) {
@@ -93,34 +95,34 @@ class StudentDetails extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          DetailsTextWidget(text: "Name     : "),
-                          DetailsTextWidget(text: "text"),
+                          DetailsTextWidget(text: "Name     :  "),
+                          DetailsTextWidget(text: student_details['name']),
                         ],
                       ),
                       Row(
                         children: [
                           DetailsTextWidget(text: "Branch   : "),
-                          DetailsTextWidget(text: "text"),
+                          DetailsTextWidget(text: student_details['branch']),
                         ],
                       ),
                       Row(
                         children: [
                           DetailsTextWidget(text: "Age         : "),
                           DetailsTextWidget(
-                            text: "text",
+                            text: student_details['age'].toString(),
                           )
                         ],
                       ),
                       Row(
                         children: [
                           DetailsTextWidget(text: "Mobile    : "),
-                          DetailsTextWidget(text: "text"),
+                          DetailsTextWidget(text: student_details['mobile'].toString()),
                         ],
                       ),
                       Row(
                         children: [
                           DetailsTextWidget(text: "Email      : "),
-                          DetailsTextWidget(text: "text"),
+                          DetailsTextWidget(text: student_details['email']),
                         ],
                       ),
                     ],

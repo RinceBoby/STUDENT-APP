@@ -17,8 +17,7 @@ class StudentAdapter extends TypeAdapter<Student> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Student(
-      firstName: fields[0] as String,
-      lastName: fields[1] as String,
+      name: fields[0] as String,
       branch: fields[2] as String,
       age: fields[3] as int,
       mobile: fields[4] as int,
@@ -29,11 +28,9 @@ class StudentAdapter extends TypeAdapter<Student> {
   @override
   void write(BinaryWriter writer, Student obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.firstName)
-      ..writeByte(1)
-      ..write(obj.lastName)
+      ..write(obj.name)
       ..writeByte(2)
       ..write(obj.branch)
       ..writeByte(3)

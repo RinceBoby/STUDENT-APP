@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:hive/hive.dart';
+import 'package:students_app/model/student_model.dart';
+import 'package:students_app/view/widgets/capitalise.dart';
 
 import '../../../core/constants.dart';
 import '../../widgets/cutsom_buttons.dart';
@@ -7,9 +10,18 @@ import 'text_button_widget.dart';
 import 'text_from_field_widget.dart';
 
 class AddStudentFormWidget extends StatelessWidget {
-  const AddStudentFormWidget({
-    Key? key,
-  }) : super(key: key);
+  AddStudentFormWidget({Key? key}) : super(key: key);
+
+  //<<<<<Controllers>>>>>//
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+  TextEditingController branchController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+
+  //<<<<<Box>>>>>//
+  Box<Student> studentBox = Hive.box<Student>(boxName);
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +80,14 @@ class AddStudentFormWidget extends StatelessWidget {
                     color: const Color(0xFFDCE5F6),
                     depth: 8,
                     intensity: 0.9,
-                    //surfaceIntensity: .9,
                     shape: NeumorphicShape.concave,
                     lightSource: LightSource.bottom,
                     boxShape: NeumorphicBoxShape.roundRect(
                       BorderRadius.circular(10),
                     ),
                   ),
-                  child: const TextFormFieldWidget(
+                  child: TextFormFieldWidget(
+                    controller: firstNameController,
                     name: "First Name",
                     prefixIcon: CupertinoIcons.person,
                     keyboardType: TextInputType.text,
@@ -95,7 +107,8 @@ class AddStudentFormWidget extends StatelessWidget {
                       BorderRadius.circular(10),
                     ),
                   ),
-                  child: const TextFormFieldWidget(
+                  child: TextFormFieldWidget(
+                    controller: lastNameController,
                     name: "Last Name",
                     prefixIcon: CupertinoIcons.person_2,
                     keyboardType: TextInputType.text,
@@ -120,7 +133,8 @@ class AddStudentFormWidget extends StatelessWidget {
                             BorderRadius.circular(10),
                           ),
                         ),
-                        child: const TextFormFieldWidget(
+                        child: TextFormFieldWidget(
+                          controller: branchController,
                           name: "Branch",
                           prefixIcon: CupertinoIcons.person_2_square_stack,
                           keyboardType: TextInputType.text,
@@ -143,7 +157,8 @@ class AddStudentFormWidget extends StatelessWidget {
                             BorderRadius.circular(10),
                           ),
                         ),
-                        child: const TextFormFieldWidget(
+                        child: TextFormFieldWidget(
+                          controller: ageController,
                           name: "Age",
                           prefixIcon: CupertinoIcons.list_number_rtl,
                           keyboardType: TextInputType.number,
@@ -166,7 +181,8 @@ class AddStudentFormWidget extends StatelessWidget {
                       BorderRadius.circular(10),
                     ),
                   ),
-                  child: const TextFormFieldWidget(
+                  child: TextFormFieldWidget(
+                    controller: mobileController,
                     name: "Mobile No",
                     prefixIcon: CupertinoIcons.device_phone_portrait,
                     keyboardType: TextInputType.phone,
@@ -180,13 +196,14 @@ class AddStudentFormWidget extends StatelessWidget {
                     color: const Color(0xFFDCE5F6),
                     depth: 8,
                     intensity: 0.9,
-                    shape: NeumorphicShape.convex,
+                    shape: NeumorphicShape.concave,
                     lightSource: LightSource.bottom,
                     boxShape: NeumorphicBoxShape.roundRect(
                       BorderRadius.circular(10),
                     ),
                   ),
-                  child: const TextFormFieldWidget(
+                  child: TextFormFieldWidget(
+                    controller: emailController,
                     name: "Email",
                     prefixIcon: CupertinoIcons.mail,
                     keyboardType: TextInputType.emailAddress,
@@ -195,10 +212,22 @@ class AddStudentFormWidget extends StatelessWidget {
                 kHeight30,
 
                 //<<<<<Submit_Button>>>>>//
-                 TextButtonWidget(
+                TextButtonWidget(
                   icon: CupertinoIcons.person_add_solid,
                   text: " Add Student",
-                  onTap: (){},
+                  onTap: () {
+                    Student newStudent = Student(
+                      name: firstNameController.text.capitalise() +
+                          "" +
+                          lastNameController.text.capitalise(),
+                      branch: branchController.text.capitalise(),
+                      age: int.parse(ageController.text),
+                      mobile: int.parse(mobileController.text),
+                      email: emailController.text,
+                    );
+                    studentBox.add(newStudent);
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
