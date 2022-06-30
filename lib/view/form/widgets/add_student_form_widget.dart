@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
+import 'package:students_app/core/colors.dart';
 import 'package:students_app/model/student_model.dart';
 import 'package:students_app/view/widgets/capitalise.dart';
 
@@ -16,9 +17,12 @@ class AddStudentFormWidget extends StatelessWidget {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
-  TextEditingController branchController = TextEditingController();
+  TextEditingController batchController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+
+  //<<<<<Form_Key>>>>>//
+  final _formKey = GlobalKey<FormState>();
 
   //<<<<<Box>>>>>//
   Box<Student> studentBox = Hive.box<Student>(boxName);
@@ -30,11 +34,9 @@ class AddStudentFormWidget extends StatelessWidget {
         kHeight20,
 
         //<<<<<Student_Image>>>>>//
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+
+        Stack(
           children: [
-            kWidth50,
-            //kWidth10,
             Neumorphic(
               padding: const EdgeInsets.all(2),
               style: NeumorphicStyle(
@@ -53,18 +55,34 @@ class AddStudentFormWidget extends StatelessWidget {
                 ),
               ),
             ),
-            kWidth05,
-
             //<<<<<Camera_Button>>>>>//
-            Padding(
-              padding: const EdgeInsets.only(top: 120),
-              child: CustomButton(
-                icon: CupertinoIcons.camera_on_rectangle_fill,
-                onTap: () {},
+            Positioned(
+              left: 120,
+              top: 132,
+              child: Neumorphic(
+                padding: const EdgeInsets.all(0),
+                style: NeumorphicStyle(
+                  color: const Color(0xFFDCE5F6),
+                  depth: 10,
+                  intensity: 0,
+                  shape: NeumorphicShape.convex,
+                  boxShape: NeumorphicBoxShape.roundRect(
+                    BorderRadius.circular(90),
+                  ),
+                ),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    CupertinoIcons.camera_on_rectangle_fill,
+                    color: kGrey,
+                    size: 25,
+                  ),
+                ),
               ),
             ),
           ],
         ),
+        kWidth05,
 
         kHeight20,
 
@@ -72,6 +90,7 @@ class AddStudentFormWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 //<<<<<First_Name>>>>>//
@@ -87,6 +106,17 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextFormFieldWidget(
+                    validator: (value) {
+                      String patttern = r'(^[a-z A-Z]+$)';
+                      RegExp regExp = RegExp(patttern.toString());
+                      if (value.length == 0) {
+                        return "Enter your name";
+                      } else if (!regExp.hasMatch(value)) {
+                        return 'Please enter a valid name';
+                      } else {
+                        return null;
+                      }
+                    },
                     controller: firstNameController,
                     name: "First Name",
                     prefixIcon: CupertinoIcons.person,
@@ -108,6 +138,17 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextFormFieldWidget(
+                    validator: (value) {
+                      String patttern = r'(^[a-z A-Z]+$)';
+                      RegExp regExp = RegExp(patttern.toString());
+                      if (value.length == 0) {
+                        return "Enter your name";
+                      } else if (!regExp.hasMatch(value)) {
+                        return 'Please enter a valid name';
+                      } else {
+                        return null;
+                      }
+                    },
                     controller: lastNameController,
                     name: "Last Name",
                     prefixIcon: CupertinoIcons.person_2,
@@ -116,7 +157,7 @@ class AddStudentFormWidget extends StatelessWidget {
                 ),
                 kHeight10,
 
-                //<<<<<Branch>>>>>//
+                //<<<<<Batch>>>>>//
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -134,8 +175,15 @@ class AddStudentFormWidget extends StatelessWidget {
                           ),
                         ),
                         child: TextFormFieldWidget(
-                          controller: branchController,
-                          name: "Branch",
+                          //<<<<<Validator>>>>>//
+                          validator: (value) {
+                            if (value == "") {
+                              return "Field is required";
+                            }
+                            return null;
+                          },
+                          controller: batchController,
+                          name: "Batch",
                           prefixIcon: CupertinoIcons.person_2_square_stack,
                           keyboardType: TextInputType.text,
                         ),
@@ -158,6 +206,19 @@ class AddStudentFormWidget extends StatelessWidget {
                           ),
                         ),
                         child: TextFormFieldWidget(
+                          //<<<<<Validator>>>>>//
+                          validator: (value) {
+                            if (value.isEmpty || value == null) {
+                              return "Required Field";
+                            } else if (value.length > 2) {
+                              return "Enter a  valid age";
+                            } else if (int.parse(value) < 18 ||
+                                int.parse(value) > 45) {
+                              return "Enter a  valid age";
+                            } else {
+                              return null;
+                            }
+                          },
                           controller: ageController,
                           name: "Age",
                           prefixIcon: CupertinoIcons.list_number_rtl,
@@ -182,6 +243,18 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextFormFieldWidget(
+                    //<<<<<Validator>>>>>//
+                    validator: (value) {
+                      String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+                      RegExp regExp = RegExp(patttern.toString());
+                      if (value.length == 0) {
+                        return "Required Field";
+                      } else if (!regExp.hasMatch(value)) {
+                        return 'Please enter valid mobile number';
+                      } else {
+                        return null;
+                      }
+                    },
                     controller: mobileController,
                     name: "Mobile No",
                     prefixIcon: CupertinoIcons.device_phone_portrait,
@@ -203,6 +276,19 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextFormFieldWidget(
+                    //<<<<<Validator>>>>>//
+                    validator: (value) {
+                      Pattern pattern =
+                          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                      RegExp regex = RegExp(pattern.toString());
+                      if (value.isEmpty || value == null) {
+                        return "Required Field";
+                      } else if (!regex.hasMatch(value)) {
+                        return "Enter a valid email";
+                      } else {
+                        return null;
+                      }
+                    },
                     controller: emailController,
                     name: "Email",
                     prefixIcon: CupertinoIcons.mail,
@@ -216,17 +302,41 @@ class AddStudentFormWidget extends StatelessWidget {
                   icon: CupertinoIcons.person_add_solid,
                   text: " Add Student",
                   onTap: () {
-                    Student newStudent = Student(
-                      name: firstNameController.text.capitalise() +
-                          "" +
-                          lastNameController.text.capitalise(),
-                      branch: branchController.text.capitalise(),
-                      age: int.parse(ageController.text),
-                      mobile: int.parse(mobileController.text),
-                      email: emailController.text,
-                    );
-                    studentBox.add(newStudent);
-                    Navigator.pop(context);
+                    if (_formKey.currentState!.validate()) {
+                      Student newStudent = Student(
+                        name:
+                            "${firstNameController.text.capitalise()} ${lastNameController.text.capitalise()}",
+                        batch: batchController.text.toUpperCase(),
+                        age: int.parse(ageController.text),
+                        mobile: int.parse(mobileController.text),
+                        email: emailController.text,
+                      );
+                      //<<<<<Adding_to_Box>>>>>//
+                      studentBox.add(newStudent);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: NeumorphicText(
+                            "Student added successfully",
+                            style: const NeumorphicStyle(
+                              depth: 10,
+                              intensity: 0.8,
+                              color: kGrey,
+                            ),
+                            textStyle: NeumorphicTextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          backgroundColor: kBgColor,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: 6.0,
+                        ),
+                      );
+                      Navigator.pop(context);
+                    }
                   },
                 ),
               ],

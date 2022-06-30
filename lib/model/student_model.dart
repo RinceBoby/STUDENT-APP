@@ -2,26 +2,26 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'student_model.g.dart';
 
-@HiveType(typeId: 9)
+@HiveType(typeId: 1)
 class Student {
   @HiveField(0)
   final String name;
 
-  @HiveField(2)
-  final String branch;
+  @HiveField(1)
+  final String batch;
 
-  @HiveField(3)
+  @HiveField(2)
   final int age;
 
-  @HiveField(4)
+  @HiveField(3)
   final int mobile;
 
-  @HiveField(5)
+  @HiveField(4)
   final String email;
 
   Student({
     required this.name,
-    required this.branch,
+    required this.batch,
     required this.age,
     required this.mobile,
     required this.email,

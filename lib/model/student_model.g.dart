@@ -8,7 +8,7 @@ part of 'student_model.dart';
 
 class StudentAdapter extends TypeAdapter<Student> {
   @override
-  final int typeId = 9;
+  final int typeId = 1;
 
   @override
   Student read(BinaryReader reader) {
@@ -18,10 +18,10 @@ class StudentAdapter extends TypeAdapter<Student> {
     };
     return Student(
       name: fields[0] as String,
-      branch: fields[2] as String,
-      age: fields[3] as int,
-      mobile: fields[4] as int,
-      email: fields[5] as String,
+      batch: fields[1] as String,
+      age: fields[2] as int,
+      mobile: fields[3] as int,
+      email: fields[4] as String,
     );
   }
 
@@ -31,13 +31,13 @@ class StudentAdapter extends TypeAdapter<Student> {
       ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
+      ..writeByte(1)
+      ..write(obj.batch)
       ..writeByte(2)
-      ..write(obj.branch)
-      ..writeByte(3)
       ..write(obj.age)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.mobile)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.email);
   }
 

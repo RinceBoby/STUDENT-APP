@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:students_app/core/colors.dart';
 import 'package:students_app/model/student_model.dart';
@@ -29,6 +30,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: kBgColor,
         primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(),
+        // fontFamily: GoogleFonts.lato(
+        //   fontWeight: FontWeight.w400,
+        //   fontStyle: FontStyle.italic,
+        // ).toString(),
       ),
       home: const SplashScreen(),
     );

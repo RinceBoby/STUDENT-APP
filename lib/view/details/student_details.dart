@@ -8,9 +8,12 @@ import '../form/widgets/text_button_widget.dart';
 import 'widget/details_text_widget.dart';
 
 class StudentDetails extends StatelessWidget {
-   StudentDetails({Key? key,required this.student_details}) : super(key: key);
+  StudentDetails({
+    Key? key,
+    required this.student_details,
+  }) : super(key: key);
 
-   Map student_details = {};
+  Map student_details = {};
 
   @override
   Widget build(BuildContext context) {
@@ -90,38 +93,39 @@ class StudentDetails extends StatelessWidget {
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Column(
+
+                  //<<<<<Student_Details>>>>>//
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          DetailsTextWidget(text: "Name"),
+                          DetailsTextWidget(text: "Batch"),
+                          DetailsTextWidget(text: "Age"),
+                          DetailsTextWidget(text: "Mobile"),
+                          DetailsTextWidget(text: "Email"),
+                        ],
+                      ),
+                      Column(
+                        children: const [
+                          DetailsTextWidget(text: ":"),
+                          DetailsTextWidget(text: ":"),
+                          DetailsTextWidget(text: ":"),
+                          DetailsTextWidget(text: ":"),
+                          DetailsTextWidget(text: ":"),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DetailsTextWidget(text: "Name     :  "),
                           DetailsTextWidget(text: student_details['name']),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          DetailsTextWidget(text: "Branch   : "),
-                          DetailsTextWidget(text: student_details['branch']),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          DetailsTextWidget(text: "Age         : "),
+                          DetailsTextWidget(text: student_details['batch']),
                           DetailsTextWidget(
-                            text: student_details['age'].toString(),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          DetailsTextWidget(text: "Mobile    : "),
-                          DetailsTextWidget(text: student_details['mobile'].toString()),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          DetailsTextWidget(text: "Email      : "),
+                              text: student_details['age'].toString()),
+                          DetailsTextWidget(
+                              text: student_details['mobile'].toString()),
                           DetailsTextWidget(text: student_details['email']),
                         ],
                       ),
@@ -138,19 +142,21 @@ class StudentDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width*0.4,
+                width: MediaQuery.of(context).size.width * 0.4,
                 child: TextButtonWidget(
                   icon: Icons.edit_rounded,
                   text: " Edit",
-                  onTap: (){},
+                  onTap: () {},
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width*0.4,
+                width: MediaQuery.of(context).size.width * 0.4,
                 child: TextButtonWidget(
                   icon: CupertinoIcons.delete_simple,
                   text: " Delete",
-                  onTap: (){},
+                  onTap: () {
+                    
+                  },
                 ),
               ),
             ],

@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:students_app/core/colors.dart';
 import 'package:students_app/core/constants.dart';
 import 'package:students_app/model/student_model.dart';
+import 'package:students_app/view/widgets/cutsom_buttons.dart';
 
 import 'widgets/appbar_widget.dart';
 import 'widgets/student_list_widget.dart';
@@ -24,11 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       // backgroundColor: kBgColor,
       body: Column(
-        children:const [
+        children: const [
           kHeight40,
 
           //<<<<<AppBar>>>>>//
-           Padding(
+          Padding(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: AppBarWidget(),
           ),
@@ -36,8 +37,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
           //<<<<<Student_List>>>>>//
           StudentListWidget(),
-          kHeight20,
+          kHeight10,
         ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: CustomButton(
+          icon: Icons.search,
+          onTap: () {},
+        ),
       ),
     );
   }

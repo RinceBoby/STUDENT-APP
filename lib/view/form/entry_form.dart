@@ -14,11 +14,11 @@ class EntryForm extends StatelessWidget {
       backgroundColor: kBgColor,
       body: Column(
         children: [
-          kHeight40,
+          kHeight30,
 
           //<<<<<AppBar>>>>>//
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
+            padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
             child: Row(
               children: [
                 CustomButton(

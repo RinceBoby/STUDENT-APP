@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:students_app/model/student_model.dart';
 import 'package:students_app/view/details/student_details.dart';
@@ -46,7 +47,8 @@ class _StudentListWidgetState extends State<StudentListWidget> {
             );
           } else {
             return ListView.separated(
-            
+              shrinkWrap: true,
+              reverse: true,
               separatorBuilder: (BuildContext context, index) => kHeight20,
               itemCount: box.length,
               itemBuilder: (context, index) {
@@ -104,9 +106,9 @@ class _StudentListWidgetState extends State<StudentListWidget> {
                               ),
                             ),
 
-                            //<<<<<Branch_Name>>>>>//
+                            //<<<<Batch_Name>>>>>//
                             NeumorphicText(
-                              student.branch,
+                              student.batch,
                               style: const NeumorphicStyle(
                                 depth: 10,
                                 intensity: 0.8,
@@ -127,13 +129,15 @@ class _StudentListWidgetState extends State<StudentListWidget> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>  StudentDetails(student_details: {
-                                  'name': student.name,
-                                  "age" : student.age,
-                                  "branch": student.branch,
-                                  "mobile" : student.mobile,
-                                  "email" : student.email,
-                                },),
+                                builder: (context) => StudentDetails(
+                                  student_details: {
+                                    'name': student.name,
+                                    "age": student.age,
+                                    "batch": student.batch,
+                                    "mobile": student.mobile,
+                                    "email": student.email,
+                                  },
+                                ),
                               ),
                             );
                           },
