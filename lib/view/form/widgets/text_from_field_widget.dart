@@ -1,5 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
+import 'package:flutter/material.dart';
 import '../../../core/colors.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
@@ -23,11 +23,12 @@ class TextFormFieldWidget extends StatelessWidget {
       autocorrect: true,
       validator: validator,
       controller: controller,
-      maxLength: (name == "Mobile No") ? 10 : null,
+      
+      maxLength: name == "Mobile No" ? 10 : null,
       decoration: InputDecoration(
         labelText: name,
         prefixIcon: Icon(prefixIcon),
-        prefixText: (name == "Mobile No") ? '+91' : null,
+        prefixText: name == "Mobile No" ? '+91' : null,
         prefixIconColor: kGrey,
         counterText: "",
         labelStyle:const TextStyle(color: kGrey),

@@ -15,9 +15,9 @@ Future<void> main() async {
   Hive.init(directory.path); 
 
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Registering_Adaptor*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-  if (Hive.isAdapterRegistered(StudentAdapter().typeId)) {
+
     Hive.registerAdapter(StudentAdapter());
-  } 
+  
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Open_Hive_box*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   await Hive.openBox<Student>(boxName); 
 

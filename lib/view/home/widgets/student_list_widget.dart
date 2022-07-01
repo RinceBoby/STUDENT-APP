@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -14,17 +16,17 @@ class StudentListWidget extends StatelessWidget {
   }) : super(key: key);
 
   //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Box*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-  Box studentBox = Hive.box<Student>(boxName);
+  Box<Student> studentBox = Hive.box<Student>(boxName);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       //
       //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Valuelistenable_Builder*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-      child: ValueListenableBuilder(
+      child: ValueListenableBuilder<Box<Student>>(
         valueListenable: studentBox.listenable(),
-        builder: (context, Box box, _) {
-          if (box.isEmpty) {
+        builder: (context, Box<Student> box, _) {
+          if (box.values.isEmpty) {
             return Center(
               child: NeumorphicText(
                 "No Students Added !",
@@ -48,7 +50,7 @@ class StudentListWidget extends StatelessWidget {
               separatorBuilder: (context, index) => kHeight20,
               itemCount: box.length,
               itemBuilder: (context, index) {
-                Student student = box.getAt(index);
+                Student? student = box.getAt(index);
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Neumorphic(
@@ -79,12 +81,12 @@ class StudentListWidget extends StatelessWidget {
                               BorderRadius.circular(60),
                             ),
                           ),
-                          child: const Padding(
+                          child:  Padding(
                             padding: EdgeInsets.all(3.0),
                             child: CircleAvatar(
                               radius: 30,
-                              backgroundImage: NetworkImage(
-                                  "https://us.123rf.com/450wm/djvstock/djvstock1508/djvstock150806893/44095667-web-developer-design-vector-illustration-eps-10-.jpg?ver=6"),
+                              backgroundImage: FileImage(File(student!.image.toString()))
+                              //AssetImage("assets/images/profileVector.jpg"),
                             ),
                           ),
                         ),
@@ -94,7 +96,7 @@ class StudentListWidget extends StatelessWidget {
                             //
                             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                             NeumorphicText(
-                              student.name,
+                             "${student.firstName} ${student.lastName} ",
                               style: const NeumorphicStyle(
                                 depth: 10,
                                 intensity: 0.8,
@@ -131,13 +133,7 @@ class StudentListWidget extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => StudentDetails(
                                   index: index,
-                                  student_details: {
-                                    "name": student.name,
-                                    "age": student.age,
-                                    "batch": student.batch,
-                                    "mobile": student.mobile,
-                                    "email": student.email,
-                                  },
+                                 
                                 ),
                               ),
                             );
