@@ -6,14 +6,13 @@ import 'package:students_app/model/student_model.dart';
 import 'package:students_app/view/widgets/capitalise.dart';
 
 import '../../../core/constants.dart';
-import '../../widgets/cutsom_buttons.dart';
 import 'text_button_widget.dart';
 import 'text_from_field_widget.dart';
 
 class AddStudentFormWidget extends StatelessWidget {
   AddStudentFormWidget({Key? key}) : super(key: key);
 
-  //<<<<<Controllers>>>>>//
+  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Controllers*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
@@ -33,7 +32,7 @@ class AddStudentFormWidget extends StatelessWidget {
       children: [
         kHeight20,
 
-        //<<<<<Student_Image>>>>>//
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Image*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 
         Stack(
           children: [
@@ -55,7 +54,9 @@ class AddStudentFormWidget extends StatelessWidget {
                 ),
               ),
             ),
-            //<<<<<Camera_Button>>>>>//
+
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Camera_Button*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+
             Positioned(
               left: 120,
               top: 132,
@@ -83,17 +84,16 @@ class AddStudentFormWidget extends StatelessWidget {
           ],
         ),
         kWidth05,
-
         kHeight20,
 
-        //<<<<<Form>>>>>//
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Form*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                //<<<<<First_Name>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*First_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 Neumorphic(
                   style: NeumorphicStyle(
                     color: const Color(0xFFDCE5F6),
@@ -106,6 +106,7 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextFormFieldWidget(
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     validator: (value) {
                       String patttern = r'(^[a-z A-Z]+$)';
                       RegExp regExp = RegExp(patttern.toString());
@@ -125,7 +126,7 @@ class AddStudentFormWidget extends StatelessWidget {
                 ),
                 kHeight10,
 
-                //<<<<<Last_Name>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Last_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 Neumorphic(
                   style: NeumorphicStyle(
                     color: const Color(0xFFDCE5F6),
@@ -138,6 +139,7 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextFormFieldWidget(
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     validator: (value) {
                       String patttern = r'(^[a-z A-Z]+$)';
                       RegExp regExp = RegExp(patttern.toString());
@@ -157,7 +159,7 @@ class AddStudentFormWidget extends StatelessWidget {
                 ),
                 kHeight10,
 
-                //<<<<<Batch>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Batch*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -175,7 +177,7 @@ class AddStudentFormWidget extends StatelessWidget {
                           ),
                         ),
                         child: TextFormFieldWidget(
-                          //<<<<<Validator>>>>>//
+                          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                           validator: (value) {
                             if (value == "") {
                               return "Field is required";
@@ -191,7 +193,7 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                     kWidth05,
 
-                    //<<<<<Age>>>>>//
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Age*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.32,
                       child: Neumorphic(
@@ -206,15 +208,15 @@ class AddStudentFormWidget extends StatelessWidget {
                           ),
                         ),
                         child: TextFormFieldWidget(
-                          //<<<<<Validator>>>>>//
+                          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validator*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                           validator: (value) {
                             if (value.isEmpty || value == null) {
                               return "Required Field";
-                            } else if (value.length > 2) {
-                              return "Enter a  valid age";
-                            } else if (int.parse(value) < 18 ||
+                            } else if (value.length < 2 || value.length > 2) {
+                              return "Under age to join";
+                            } else if (int.parse(value) < 17 ||
                                 int.parse(value) > 45) {
-                              return "Enter a  valid age";
+                              return "Must be b/w 18-45";
                             } else {
                               return null;
                             }
@@ -230,7 +232,7 @@ class AddStudentFormWidget extends StatelessWidget {
                 ),
                 kHeight10,
 
-                //<<<<<Mobile>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Mobile*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 Neumorphic(
                   style: NeumorphicStyle(
                     color: const Color(0xFFDCE5F6),
@@ -243,7 +245,7 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextFormFieldWidget(
-                    //<<<<<Validator>>>>>//
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     validator: (value) {
                       String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
                       RegExp regExp = RegExp(patttern.toString());
@@ -263,7 +265,7 @@ class AddStudentFormWidget extends StatelessWidget {
                 ),
                 kHeight10,
 
-                //<<<<<Email>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Email*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 Neumorphic(
                   style: NeumorphicStyle(
                     color: const Color(0xFFDCE5F6),
@@ -276,7 +278,7 @@ class AddStudentFormWidget extends StatelessWidget {
                     ),
                   ),
                   child: TextFormFieldWidget(
-                    //<<<<<Validator>>>>>//
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     validator: (value) {
                       Pattern pattern =
                           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -297,7 +299,7 @@ class AddStudentFormWidget extends StatelessWidget {
                 ),
                 kHeight30,
 
-                //<<<<<Submit_Button>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Submit_Button*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 TextButtonWidget(
                   icon: CupertinoIcons.person_add_solid,
                   text: " Add Student",
@@ -311,8 +313,11 @@ class AddStudentFormWidget extends StatelessWidget {
                         mobile: int.parse(mobileController.text),
                         email: emailController.text,
                       );
-                      //<<<<<Adding_to_Box>>>>>//
+
+                      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Adding_to_Box*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                       studentBox.add(newStudent);
+
+                      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Snackbar*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: NeumorphicText(
@@ -320,11 +325,12 @@ class AddStudentFormWidget extends StatelessWidget {
                             style: const NeumorphicStyle(
                               depth: 10,
                               intensity: 0.8,
-                              color: kGrey,
+                              color: Colors.green,
                             ),
                             textStyle: NeumorphicTextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
+                              
                             ),
                           ),
                           backgroundColor: kBgColor,

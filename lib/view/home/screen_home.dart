@@ -2,7 +2,6 @@
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:hive/hive.dart';
-import 'package:students_app/core/colors.dart';
 import 'package:students_app/core/constants.dart';
 import 'package:students_app/model/student_model.dart';
 import 'package:students_app/view/widgets/cutsom_buttons.dart';
@@ -18,28 +17,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //<<<<<Hive_box>>>>>//
+  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Hive_box>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   Box studentBox = Hive.box<Student>(boxName);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: kBgColor,
       body: Column(
-        children: const [
+        children:  [
           kHeight40,
 
-          //<<<<<AppBar>>>>>//
-          Padding(
+          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*AppBar*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+          const Padding(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
             child: AppBarWidget(),
           ),
-          //kHeight05,
 
-          //<<<<<Student_List>>>>>//
+          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_List*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
           StudentListWidget(),
           kHeight10,
         ],
       ),
+
+      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Floating_Action_Button*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(right: 10),
         child: CustomButton(

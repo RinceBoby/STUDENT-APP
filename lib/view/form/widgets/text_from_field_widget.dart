@@ -20,6 +20,7 @@ class TextFormFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autocorrect: true,
       validator: validator,
       controller: controller,
       maxLength: (name == "Mobile No") ? 10 : null,
@@ -29,6 +30,7 @@ class TextFormFieldWidget extends StatelessWidget {
         prefixText: (name == "Mobile No") ? '+91' : null,
         prefixIconColor: kGrey,
         counterText: "",
+        labelStyle:const TextStyle(color: kGrey),
       ),
       textCapitalization: TextCapitalization.words,
       keyboardType: keyboardType,

@@ -20,13 +20,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _screenhome() async {
     await Future.delayed(
-      Duration(milliseconds: 3000),
+      const Duration(milliseconds: 3000),
       () {},
     );
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeScreen(),
+        builder: (context) => const HomeScreen(),
       ),
     );
   }
@@ -48,8 +49,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 shape: NeumorphicShape.concave,
                 boxShape: NeumorphicBoxShape.circle(),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
+              child:const Padding(
+                padding: EdgeInsets.all(30.0),
                 child: Icon(
                   CupertinoIcons.person_3,
                   color: kGrey,
@@ -63,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Neumorphic(
               padding: const EdgeInsets.all(2),
               style: NeumorphicStyle(
-                color: Color(0xFFDCE5F6),
+                color:const Color(0xFFDCE5F6),
                 depth: 10,
                 intensity: 0.8,
                 shape: NeumorphicShape.concave,

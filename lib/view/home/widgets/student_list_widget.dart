@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:students_app/model/student_model.dart';
 import 'package:students_app/view/details/student_details.dart';
@@ -9,22 +8,19 @@ import '../../../core/colors.dart';
 import '../../../core/constants.dart';
 import '../../widgets/cutsom_buttons.dart';
 
-class StudentListWidget extends StatefulWidget {
-  const StudentListWidget({
+class StudentListWidget extends StatelessWidget {
+  StudentListWidget({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<StudentListWidget> createState() => _StudentListWidgetState();
-}
-
-class _StudentListWidgetState extends State<StudentListWidget> {
-  //<<<<<Box>>>>>//
+  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Box*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   Box studentBox = Hive.box<Student>(boxName);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      //
+      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Valuelistenable_Builder*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
       child: ValueListenableBuilder(
         valueListenable: studentBox.listenable(),
         builder: (context, Box box, _) {
@@ -41,15 +37,15 @@ class _StudentListWidgetState extends State<StudentListWidget> {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1,
-                  //fontStyle: FontStyle.italic,
                 ),
               ),
             );
           } else {
+            //
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_List_View*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
             return ListView.separated(
               shrinkWrap: true,
-              reverse: true,
-              separatorBuilder: (BuildContext context, index) => kHeight20,
+              separatorBuilder: (context, index) => kHeight20,
               itemCount: box.length,
               itemBuilder: (context, index) {
                 Student student = box.getAt(index);
@@ -70,7 +66,8 @@ class _StudentListWidgetState extends State<StudentListWidget> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        //<<<<<Student_Image>>>>>//
+                        //
+                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Image*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                         Neumorphic(
                           padding: const EdgeInsets.all(2),
                           style: NeumorphicStyle(
@@ -86,13 +83,16 @@ class _StudentListWidgetState extends State<StudentListWidget> {
                             padding: EdgeInsets.all(3.0),
                             child: CircleAvatar(
                               radius: 30,
+                              backgroundImage: NetworkImage(
+                                  "https://us.123rf.com/450wm/djvstock/djvstock1508/djvstock150806893/44095667-web-developer-design-vector-illustration-eps-10-.jpg?ver=6"),
                             ),
                           ),
                         ),
 
                         Column(
                           children: [
-                            //<<<<<Student_Name>>>>>//
+                            //
+                            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                             NeumorphicText(
                               student.name,
                               style: const NeumorphicStyle(
@@ -106,7 +106,7 @@ class _StudentListWidgetState extends State<StudentListWidget> {
                               ),
                             ),
 
-                            //<<<<Batch_Name>>>>>//
+                            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Batch_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                             NeumorphicText(
                               student.batch,
                               style: const NeumorphicStyle(
@@ -122,7 +122,7 @@ class _StudentListWidgetState extends State<StudentListWidget> {
                           ],
                         ),
 
-                        //<<<<<Go_To_Details>>>>>//
+                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Go_To_Details*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                         CustomButton(
                           icon: CupertinoIcons.forward,
                           onTap: () {
@@ -130,8 +130,9 @@ class _StudentListWidgetState extends State<StudentListWidget> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => StudentDetails(
+                                  index: index,
                                   student_details: {
-                                    'name': student.name,
+                                    "name": student.name,
                                     "age": student.age,
                                     "batch": student.batch,
                                     "mobile": student.mobile,

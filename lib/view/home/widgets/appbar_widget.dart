@@ -15,10 +15,14 @@ class AppBarWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        //
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Log_Out*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
         CustomButton(
           icon: CupertinoIcons.reply,
           onTap: ()=>Navigator.pop(context),
         ),
+
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Title*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
         NeumorphicText(
           "STUDENTS",
           style: const NeumorphicStyle(
@@ -31,6 +35,8 @@ class AppBarWidget extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Add_Student*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
         CustomButton(
           icon: CupertinoIcons.person_badge_plus,
           onTap:()=> Navigator.push(

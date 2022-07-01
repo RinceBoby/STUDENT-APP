@@ -1,20 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:hive/hive.dart';
 import 'package:students_app/core/colors.dart';
 import 'package:students_app/core/constants.dart';
+import 'package:students_app/model/student_model.dart';
 import 'package:students_app/view/widgets/cutsom_buttons.dart';
 
 import '../form/widgets/text_button_widget.dart';
 import 'widget/details_text_widget.dart';
 
-class StudentDetails extends StatelessWidget {
+class StudentDetails extends StatefulWidget {
   StudentDetails({
     Key? key,
     required this.student_details,
+    required this.index,
   }) : super(key: key);
 
+  int index;
   Map student_details = {};
 
+  @override
+  State<StudentDetails> createState() => _StudentDetailsState();
+}
+
+class _StudentDetailsState extends State<StudentDetails> {
+  Box studentBox = Hive.box<Student>(boxName);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +44,7 @@ class StudentDetails extends StatelessWidget {
                   },
                 ),
                 NeumorphicText(
-                  "Student Name",
+                  widget.student_details["name"],
                   style: const NeumorphicStyle(
                     depth: 10,
                     intensity: 0.8,
@@ -54,7 +64,7 @@ class StudentDetails extends StatelessWidget {
           ),
           kHeight40,
 
-          //<<<<<Student_Image>>>>>//
+          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Image*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
           Neumorphic(
             padding: const EdgeInsets.all(2),
             style: NeumorphicStyle(
@@ -75,7 +85,7 @@ class StudentDetails extends StatelessWidget {
           ),
           kHeight20,
 
-          //<<<<<Student_Details>>>>>//
+          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Details*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Neumorphic(
@@ -120,13 +130,17 @@ class StudentDetails extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DetailsTextWidget(text: student_details['name']),
-                          DetailsTextWidget(text: student_details['batch']),
                           DetailsTextWidget(
-                              text: student_details['age'].toString()),
+                              text: widget.student_details['name']),
                           DetailsTextWidget(
-                              text: student_details['mobile'].toString()),
-                          DetailsTextWidget(text: student_details['email']),
+                              text: widget.student_details['batch']),
+                          DetailsTextWidget(
+                              text: widget.student_details['age'].toString()),
+                          DetailsTextWidget(
+                              text:
+                                  widget.student_details['mobile'].toString()),
+                          DetailsTextWidget(
+                              text: widget.student_details['email']),
                         ],
                       ),
                     ],
@@ -137,10 +151,10 @@ class StudentDetails extends StatelessWidget {
           ),
           kHeight20,
 
-          //<<<<<Buttons>>>>>//
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Edit_Buttons*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.4,
                 child: TextButtonWidget(
@@ -149,13 +163,40 @@ class StudentDetails extends StatelessWidget {
                   onTap: () {},
                 ),
               ),
+              //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Delete_Buttons*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.4,
                 child: TextButtonWidget(
                   icon: CupertinoIcons.delete_simple,
                   text: " Delete",
                   onTap: () {
-                    
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Delete_Function*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                    studentBox.deleteAt(widget.index);
+
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Snackbar*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: NeumorphicText(
+                          "Student Deleted Successfully",
+                          style: const NeumorphicStyle(
+                            depth: 10,
+                            intensity: 0.8,
+                            color: Colors.redAccent,
+                          ),
+                          textStyle: NeumorphicTextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        backgroundColor: kBgColor,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 6.0,
+                      ),
+                    );
+                    Navigator.pop(context);
                   },
                 ),
               ),
