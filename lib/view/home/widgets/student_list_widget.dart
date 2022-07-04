@@ -81,11 +81,12 @@ class StudentListWidget extends StatelessWidget {
                               BorderRadius.circular(60),
                             ),
                           ),
-                          child:  Padding(
-                            padding: EdgeInsets.all(3.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
                             child: CircleAvatar(
                               radius: 30,
-                              backgroundImage: FileImage(File(student!.image.toString()))
+                              backgroundImage:
+                                  FileImage(File(student!.image.toString())),
                               //AssetImage("assets/images/profileVector.jpg"),
                             ),
                           ),
@@ -96,7 +97,7 @@ class StudentListWidget extends StatelessWidget {
                             //
                             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                             NeumorphicText(
-                             "${student.firstName} ${student.lastName} ",
+                              "${student.firstName} ${student.lastName} ",
                               style: const NeumorphicStyle(
                                 depth: 10,
                                 intensity: 0.8,
@@ -133,7 +134,6 @@ class StudentListWidget extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => StudentDetails(
                                   index: index,
-                                 
                                 ),
                               ),
                             );
