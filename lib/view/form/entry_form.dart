@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:students_app/core/constants.dart';
 import 'package:students_app/view/widgets/capitalise.dart';
 import 'package:students_app/view/widgets/cutsom_buttons.dart';
-import 'package:flutter/material.dart';
 import '../../core/colors.dart';
 import '../../model/student_model.dart';
 import 'widgets/text_button_widget.dart';
@@ -46,8 +45,9 @@ class _EntryFormState extends State<EntryForm> {
   //<<<<<Form_Key>>>>>//
   final _formKey = GlobalKey<FormState>();
 
+  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Image>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   XFile? xFile;
-  String ? imagePath;
+  String? imagePath;
 
   //<<<<<Box>>>>>//
   Box<Student> studentBox = Hive.box<Student>(boxName);
@@ -63,7 +63,6 @@ class _EntryFormState extends State<EntryForm> {
       emailController.text = widget.student!.email;
     }
 
-    // TODO: implement initState
     super.initState();
   }
 
@@ -74,7 +73,7 @@ class _EntryFormState extends State<EntryForm> {
       body: Column(
         children: [
           kHeight30,
-          //<<<<<AppBar>>>>>//
+          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<AppBar>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
             child: Row(
@@ -107,7 +106,7 @@ class _EntryFormState extends State<EntryForm> {
                         ),
                       ),
 
-                      //<<<<<Entry_From>>>>>//
+                      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Entry_From>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                       child: _buildAddStudentFormWidget(context),
                     ),
                   ),
@@ -119,7 +118,8 @@ class _EntryFormState extends State<EntryForm> {
       ),
     );
   }
-//=================================================================================================================================================================================================================================================================================================================================================================================//
+
+//========================================================================================================================//
 
   _buildAddStudentFormWidget(BuildContext context) {
     return Column( 
@@ -190,14 +190,14 @@ class _EntryFormState extends State<EntryForm> {
         kWidth05,
         kHeight20,
 
-        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Form*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Form*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*First_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*First_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 Neumorphic(
                   style: NeumorphicStyle(
                     color: const Color(0xFFDCE5F6),
@@ -210,7 +210,7 @@ class _EntryFormState extends State<EntryForm> {
                     ),
                   ),
                   child: TextFormFieldWidget(
-                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     validator: (value) {
                       String patttern = r'(^[a-z A-Z]+$)';
                       RegExp regExp = RegExp(patttern.toString());
@@ -230,7 +230,7 @@ class _EntryFormState extends State<EntryForm> {
                 ),
                 kHeight10,
 
-                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Last_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Last_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 Neumorphic(
                   style: NeumorphicStyle(
                     color: const Color(0xFFDCE5F6),
@@ -243,7 +243,7 @@ class _EntryFormState extends State<EntryForm> {
                     ),
                   ),
                   child: TextFormFieldWidget(
-                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     validator: (value) {
                       String patttern = r'(^[a-z A-Z]+$)';
                       RegExp regExp = RegExp(patttern.toString());
@@ -281,7 +281,7 @@ class _EntryFormState extends State<EntryForm> {
                           ),
                         ),
                         child: TextFormFieldWidget(
-                          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                           validator: (value) {
                             if (value == "") {
                               return "Field is required";
@@ -297,7 +297,7 @@ class _EntryFormState extends State<EntryForm> {
                     ),
                     kWidth05,
 
-                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Age*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Age*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.32,
                       child: Neumorphic(
@@ -312,7 +312,7 @@ class _EntryFormState extends State<EntryForm> {
                           ),
                         ),
                         child: TextFormFieldWidget(
-                          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validator*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validator*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                           validator: (value) {
                             if (value.isEmpty || value == null) {
                               return "Required Field";
@@ -336,7 +336,7 @@ class _EntryFormState extends State<EntryForm> {
                 ),
                 kHeight10,
 
-                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Mobile*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Mobile*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                 Neumorphic(
                   style: NeumorphicStyle(
                     color: const Color(0xFFDCE5F6),
@@ -349,7 +349,7 @@ class _EntryFormState extends State<EntryForm> {
                     ),
                   ),
                   child: TextFormFieldWidget(
-                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                    //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Validation*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                     validator: (value) {
                       String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
                       RegExp regExp = RegExp(patttern.toString());
@@ -426,7 +426,7 @@ class _EntryFormState extends State<EntryForm> {
                         studentBox.add(newStudent);
                       }
 
-                      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Snackbar*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Snackbar*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: NeumorphicText(
