@@ -83,12 +83,17 @@ class StudentListWidget extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(3.0),
-                            child: CircleAvatar(
-                              radius: 30,
-                              backgroundImage:
-                                  FileImage(File(student!.image.toString())),
-                              //AssetImage("assets/images/profileVector.jpg"),
-                            ),
+                            child: student!.image == null
+                                ?const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: AssetImage(
+                                        "assets/images/profileVector.jpg"),
+                                  )
+                                : CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: FileImage(
+                                        File(student.image.toString())),
+                                  ),
                           ),
                         ),
 

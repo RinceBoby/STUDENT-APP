@@ -8,11 +8,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:students_app/core/constants.dart';
 import 'package:students_app/view/widgets/capitalise.dart';
 import 'package:students_app/view/widgets/cutsom_buttons.dart';
+
 import '../../core/colors.dart';
 import '../../model/student_model.dart';
 import 'widgets/text_button_widget.dart';
 import 'widgets/text_from_field_widget.dart';
 
+// ignore: must_be_immutable
 class EntryForm extends StatefulWidget {
   EntryForm({
     Key? key,
@@ -42,14 +44,14 @@ class _EntryFormState extends State<EntryForm> {
 
   TextEditingController ageController = TextEditingController();
 
-  //<<<<<Form_Key>>>>>//
+  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Form_Key*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   final _formKey = GlobalKey<FormState>();
 
-  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Image>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Image*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   XFile? xFile;
   String? imagePath;
 
-  //<<<<<Box>>>>>//
+  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Box*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
   Box<Student> studentBox = Hive.box<Student>(boxName);
 
   @override
@@ -61,8 +63,8 @@ class _EntryFormState extends State<EntryForm> {
       mobileController.text = widget.student!.mobile.toString();
       ageController.text = widget.student!.age.toString();
       emailController.text = widget.student!.email;
+      imagePath = widget.student!.image.toString();
     }
-
     super.initState();
   }
 
@@ -73,7 +75,7 @@ class _EntryFormState extends State<EntryForm> {
       body: Column(
         children: [
           kHeight30,
-          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<AppBar>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+          //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*AppBar*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
             child: Row(
@@ -106,7 +108,7 @@ class _EntryFormState extends State<EntryForm> {
                         ),
                       ),
 
-                      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Entry_From>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Entry_From*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                       child: _buildAddStudentFormWidget(context),
                     ),
                   ),
@@ -118,11 +120,12 @@ class _EntryFormState extends State<EntryForm> {
       ),
     );
   }
-
-//========================================================================================================================//
+//======================================================================================================================//
+//=======================================================>METHOD<=======================================================//
+//======================================================================================================================//
 
   _buildAddStudentFormWidget(BuildContext context) {
-    return Column( 
+    return Column(
       children: [
         kHeight20,
         //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Image*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
@@ -140,13 +143,17 @@ class _EntryFormState extends State<EntryForm> {
                 ),
               ),
               child: Padding(
-                padding:const EdgeInsets.all(8.0),
-                child: xFile == null
-                    ?const CircleAvatar(radius: 80, backgroundImage: AssetImage("assets/images/profileVector.jpg"),)
+                padding: const EdgeInsets.all(8.0),
+                child: imagePath == null
+                    ? const CircleAvatar(
+                        radius: 80,
+                        backgroundImage:
+                            AssetImage("assets/images/profileVector.jpg"),
+                      )
                     : CircleAvatar(
                         radius: 80,
                         backgroundImage: FileImage(
-                          File(xFile!.path),
+                          File(imagePath!),
                         ),
                       ),
               ),
@@ -170,11 +177,10 @@ class _EntryFormState extends State<EntryForm> {
                 child: IconButton(
                   onPressed: () async {
                     ImagePicker imagePicker = ImagePicker();
-
                     xFile = await imagePicker.pickImage(
                         source: ImageSource.gallery);
-                        final imageTemp = File(xFile!.path);
-                        imagePath= imageTemp.path;
+                    if (xFile == null) return;
+                    imagePath = xFile!.path;
                     setState(() {});
                   },
                   icon: const Icon(
