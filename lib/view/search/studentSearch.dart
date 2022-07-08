@@ -2,34 +2,112 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:students_app/model/student_model.dart';
 import 'package:students_app/view/details/student_details.dart';
 
-import '../../../core/colors.dart';
-import '../../../core/constants.dart';
-import '../../widgets/cutsom_buttons.dart';
+import '../../core/colors.dart';
+import '../../core/constants.dart';
+import '../widgets/cutsom_buttons.dart';
 
-class StudentListWidget extends StatelessWidget {
-  StudentListWidget({
-    Key? key,
-  }) : super(key: key);
+final studentBox = Hive.box<Student>(boxName);
+List<Student> studentList = studentBox.values.toList();
 
-  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Box*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-  Box<Student> studentBox = Hive.box<Student>(boxName);
+class StudentSearch extends SearchDelegate {
+  List<String> allStudents = [""];
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      //
-      //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Valuelistenable_Builder*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-      child: ValueListenableBuilder<Box<Student>>(
-        valueListenable: studentBox.listenable(),
-        builder: (context, Box<Student> box, _) {
-          if (box.values.isEmpty) {
-            return Center(
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    return theme.copyWith(
+      hintColor: Colors.grey,
+      appBarTheme: const AppBarTheme(
+        color: kBgColor,
+      ),
+      inputDecorationTheme: searchFieldDecorationTheme ??
+          const InputDecorationTheme(
+            border: InputBorder.none,
+          ),
+    );
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        close(context, null);
+      },
+      icon: const Icon(
+        Icons.arrow_back_rounded,
+        color: kGrey,
+      ),
+    );
+  }
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          if (query.isEmpty) {
+            close(context, null);
+          } else {
+            query = "";
+          }
+        },
+        icon: const Icon(
+          Icons.clear_rounded,
+          color: kGrey,
+        ),
+      ),
+    ];
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Center(
+      child: NeumorphicText(
+        "$query not found!",
+        style: const NeumorphicStyle(
+          depth: 10,
+          intensity: 0.8,
+          color: kGrey,
+        ),
+        textStyle: NeumorphicTextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final studentSearch = query.isEmpty
+        ? studentList
+        : studentList
+                .where(
+                  (element) => "${element.firstName}${element.lastName}"
+                      .toLowerCase()
+                      .contains(
+                        query.toLowerCase(),
+                      ),
+                )
+                .toList() +
+            studentList
+                .where(
+                  (element) => element.batch.toLowerCase().contains(
+                        query.toLowerCase(),
+                      ),
+                )
+                .toList();
+    return Scaffold(
+      
+      body: studentSearch.isEmpty
+          ? Center(
               child: NeumorphicText(
-                "No Students Added !",
+                "$query not found!",
                 style: const NeumorphicStyle(
                   depth: 10,
                   intensity: 0.8,
@@ -41,16 +119,13 @@ class StudentListWidget extends StatelessWidget {
                   letterSpacing: 1,
                 ),
               ),
-            );
-          } else {
-            //
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_List_View*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-            return ListView.separated(
+            )
+          : ListView.separated(
               shrinkWrap: true,
               separatorBuilder: (context, index) => kHeight20,
-              itemCount: box.length,
+              itemCount: studentSearch.length,
               itemBuilder: (context, index) {
-                Student? student = box.getAt(index);
+                Student? student = studentBox.getAt(index);
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Neumorphic(
@@ -84,15 +159,15 @@ class StudentListWidget extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: student!.image == null
-                                ?const CircleAvatar(
+                                ? const CircleAvatar(
                                     radius: 30,
                                     backgroundImage: AssetImage(
                                         "assets/images/profileVector.jpg"),
                                   )
                                 : CircleAvatar(
                                     radius: 30,
-                                    backgroundImage: FileImage(
-                                        File(student.image.toString())),
+                                    backgroundImage: FileImage(File(
+                                        studentSearch[index].image.toString())),
                                   ),
                           ),
                         ),
@@ -102,7 +177,7 @@ class StudentListWidget extends StatelessWidget {
                             //
                             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                             NeumorphicText(
-                              "${student.firstName} ${student.lastName}",
+                              "${studentSearch[index].firstName} ${studentSearch[index].lastName}",
                               style: const NeumorphicStyle(
                                 depth: 10,
                                 intensity: 0.8,
@@ -116,7 +191,7 @@ class StudentListWidget extends StatelessWidget {
 
                             //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Batch_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
                             NeumorphicText(
-                              student.batch,
+                              studentSearch[index].batch,
                               style: const NeumorphicStyle(
                                 depth: 10,
                                 intensity: 0.8,
@@ -149,10 +224,7 @@ class StudentListWidget extends StatelessWidget {
                   ),
                 );
               },
-            );
-          }
-        },
-      ),
+            ),
     );
   }
 }
