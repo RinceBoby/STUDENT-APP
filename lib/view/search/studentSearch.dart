@@ -12,10 +12,9 @@ import '../widgets/cutsom_buttons.dart';
 
 final studentBox = Hive.box<Student>(boxName);
 List<Student> studentList = studentBox.values.toList();
+List<String> allStudents = [""];
 
 class StudentSearch extends SearchDelegate {
-  List<String> allStudents = [""];
-
   @override
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -84,6 +83,7 @@ class StudentSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    int index;
     final studentSearch = query.isEmpty
         ? studentList
         : studentList
@@ -103,128 +103,139 @@ class StudentSearch extends SearchDelegate {
                 )
                 .toList();
     return Scaffold(
-      
-      body: studentSearch.isEmpty
-          ? Center(
-              child: NeumorphicText(
-                "$query not found!",
-                style: const NeumorphicStyle(
-                  depth: 10,
-                  intensity: 0.8,
-                  color: kGrey,
-                ),
-                textStyle: NeumorphicTextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                ),
-              ),
-            )
-          : ListView.separated(
-              shrinkWrap: true,
-              separatorBuilder: (context, index) => kHeight20,
-              itemCount: studentSearch.length,
-              itemBuilder: (context, index) {
-                Student? student = studentBox.getAt(index);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Neumorphic(
-                    padding: const EdgeInsets.all(10),
-                    style: NeumorphicStyle(
-                      shape: NeumorphicShape.concave,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                        BorderRadius.circular(10),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            kHeight20,
+            studentSearch.isEmpty
+                ? Center(
+                    child: NeumorphicText(
+                      "$query not found!",
+                      style: const NeumorphicStyle(
+                        depth: 10,
+                        intensity: 0.8,
+                        color: kGrey,
                       ),
-                      lightSource: LightSource.top,
-                      depth: 15,
-                      intensity: 0.9,
-                      color: kNeupColor,
+                      textStyle: NeumorphicTextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        //
-                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Image*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-                        Neumorphic(
-                          padding: const EdgeInsets.all(2),
+                  )
+                : ListView.separated(
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) => kHeight20,
+                    itemCount: studentSearch.length,
+                    itemBuilder: (context, index) {
+                      Student? student = studentBox.getAt(index);
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Neumorphic(
+                          padding: const EdgeInsets.all(10),
                           style: NeumorphicStyle(
-                            color: const Color(0xFFDCE5F6),
-                            depth: 10,
-                            intensity: 0.8,
-                            shape: NeumorphicShape.convex,
+                            shape: NeumorphicShape.concave,
                             boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(60),
+                              BorderRadius.circular(10),
                             ),
+                            lightSource: LightSource.top,
+                            depth: 15,
+                            intensity: 0.9,
+                            color: kNeupColor,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: student!.image == null
-                                ? const CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage: AssetImage(
-                                        "assets/images/profileVector.jpg"),
-                                  )
-                                : CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage: FileImage(File(
-                                        studentSearch[index].image.toString())),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //
+                              //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Image*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                              Neumorphic(
+                                padding: const EdgeInsets.all(2),
+                                style: NeumorphicStyle(
+                                  color: const Color(0xFFDCE5F6),
+                                  depth: 10,
+                                  intensity: 0.8,
+                                  shape: NeumorphicShape.convex,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(60),
                                   ),
-                          ),
-                        ),
-
-                        Column(
-                          children: [
-                            //
-                            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-                            NeumorphicText(
-                              "${studentSearch[index].firstName} ${studentSearch[index].lastName}",
-                              style: const NeumorphicStyle(
-                                depth: 10,
-                                intensity: 0.8,
-                                color: kGrey,
-                              ),
-                              textStyle: NeumorphicTextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-
-                            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Batch_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-                            NeumorphicText(
-                              studentSearch[index].batch,
-                              style: const NeumorphicStyle(
-                                depth: 10,
-                                intensity: 0.8,
-                                color: kGrey,
-                              ),
-                              textStyle: NeumorphicTextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Go_To_Details*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-                        CustomButton(
-                          icon: CupertinoIcons.forward,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => StudentDetails(
-                                  index: index,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: student!.image == null
+                                      ? const CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage: AssetImage(
+                                              "assets/images/profileVector.jpg"),
+                                        )
+                                      : CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage: FileImage(File(
+                                              studentSearch[index]
+                                                  .image
+                                                  .toString())),
+                                        ),
                                 ),
                               ),
-                            );
-                          },
+
+                              Column(
+                                children: [
+                                  //
+                                  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Student_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                                  NeumorphicText(
+                                    "${studentSearch[index].firstName} ${studentSearch[index].lastName}",
+                                    style: const NeumorphicStyle(
+                                      depth: 10,
+                                      intensity: 0.8,
+                                      color: kGrey,
+                                    ),
+                                    textStyle: NeumorphicTextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+
+                                  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Batch_Name*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                                  NeumorphicText(
+                                    studentSearch[index].batch,
+                                    style: const NeumorphicStyle(
+                                      depth: 10,
+                                      intensity: 0.8,
+                                      color: kGrey,
+                                    ),
+                                    textStyle: NeumorphicTextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*Go_To_Details*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+                              CustomButton(
+                                icon: CupertinoIcons.forward,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => StudentDetails(
+                                        index: studentList.indexWhere(
+                                            (element) =>
+                                                element.firstName ==
+                                                studentSearch[index].firstName),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
+          ],
+        ),
+      ),
     );
   }
 }

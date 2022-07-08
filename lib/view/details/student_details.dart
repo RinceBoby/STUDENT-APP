@@ -12,6 +12,7 @@ import '../form/entry_form.dart';
 import '../form/widgets/text_button_widget.dart';
 import 'widget/details_text_widget.dart';
 
+// ignore: must_be_immutable
 class StudentDetails extends StatelessWidget {
   StudentDetails({
     Key? key,

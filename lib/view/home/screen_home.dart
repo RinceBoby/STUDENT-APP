@@ -10,6 +10,7 @@ import 'package:students_app/view/widgets/cutsom_buttons.dart';
 import 'widgets/appbar_widget.dart';
 import 'widgets/student_list_widget.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 

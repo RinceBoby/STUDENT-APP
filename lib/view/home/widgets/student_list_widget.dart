@@ -10,6 +10,7 @@ import '../../../core/colors.dart';
 import '../../../core/constants.dart';
 import '../../widgets/cutsom_buttons.dart';
 
+// ignore: must_be_immutable
 class StudentListWidget extends StatelessWidget {
   StudentListWidget({
     Key? key,

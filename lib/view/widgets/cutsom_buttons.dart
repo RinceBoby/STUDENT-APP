@@ -1,6 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:students_app/core/colors.dart';
 
+// ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
   CustomButton({
     Key? key,
